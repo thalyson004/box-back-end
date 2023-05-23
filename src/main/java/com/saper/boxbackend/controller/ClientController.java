@@ -1,8 +1,10 @@
 package com.saper.boxbackend.controller;
 
 import com.saper.boxbackend.dto.ClientRequestDTO;
+import com.saper.boxbackend.dto.ClientResponseDTO;
 import com.saper.boxbackend.model.Client;
 import com.saper.boxbackend.repository.ClientRepository;
+import com.saper.boxbackend.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,22 +13,16 @@ import org.springframework.web.bind.annotation.*;
 public class ClientController {
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientService clientService;
 
     @GetMapping
     public Object getAll(){
-        return clientRepository.findAll();
+        return clientService.getAll();
     }
 
     @PostMapping
     public Object save(@RequestBody ClientRequestDTO clientRequestDTO){
 
-        Client client = new Client();
-        client.setLogin(clientRequestDTO.login);
-        client.setPassword(clientRequestDTO.password);
-        client.setName(clientRequestDTO.name);
-        client.setEmail(clientRequestDTO.email);
-
-        return clientRepository.save(client);
+        return clientService.save(clientRequestDTO);
     }
 }

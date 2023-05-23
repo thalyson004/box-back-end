@@ -1,5 +1,6 @@
 package com.saper.boxbackend.model;
 
+import com.saper.boxbackend.dto.ClientRequestDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,15 @@ public class Client {
 
     public Client() {
     }
+
+    public Client(ClientRequestDTO clientRequestDTO) {
+        this.login = clientRequestDTO.login;
+        this.password = clientRequestDTO.password;
+        this.name = clientRequestDTO.name;
+        this.email = clientRequestDTO.email;
+    }
+
+
 
     public Client(Long id, String name, String login, String email, String password) {
         this.id = id;
