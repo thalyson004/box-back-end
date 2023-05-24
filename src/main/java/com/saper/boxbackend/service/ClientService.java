@@ -63,4 +63,16 @@ public class ClientService {
             return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(clientRepository.save(client)));
         }
     }
+
+    @Transactional
+    public ResponseEntity<Object> delete(Long id) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+
+        if(clientOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
+        }else{
+            clientRepository.delete(clientOptional.get());
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+    }
 }
