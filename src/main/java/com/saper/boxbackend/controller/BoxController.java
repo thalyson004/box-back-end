@@ -3,10 +3,7 @@ package com.saper.boxbackend.controller;
 import com.saper.boxbackend.dto.BoxRequestDTO;
 import com.saper.boxbackend.service.BoxService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/box")
@@ -18,6 +15,11 @@ public class BoxController {
     @GetMapping
     public Object getAll(){
         return boxService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Object getOne(@PathVariable(name = "id") Long id){
+        return boxService.findById(id);
     }
 
     @PostMapping
