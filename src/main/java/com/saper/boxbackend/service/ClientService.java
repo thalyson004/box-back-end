@@ -42,4 +42,24 @@ public class ClientService {
             return ResponseEntity.status(HttpStatus.OK).body(clientOptional.get());
         }
     }
+
+    public Object update(Long id, ClientRequestDTO clientRequestDTO) {
+        Optional<Client> clientOptional = clientRepository.findById(id);
+
+        if(clientOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
+        }else{
+            Client client = clientOptional.get();
+
+            if(clientRequestDTO.password!=null) {
+                client.setPassword(clientRequestDTO.password);
+            }
+
+            if(clientRequestDTO.name!=null) {
+                client.setName(clientRequestDTO.name);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(clientRepository.save(client)));
+        }
+    }
 }

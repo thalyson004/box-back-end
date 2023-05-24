@@ -30,4 +30,10 @@ public class ClientController {
 
         return clientService.save(clientRequestDTO);
     }
+
+    @PutMapping("/{id}")
+    public Object update(@PathVariable(name = "id") Long id,
+                         @RequestBody ClientRequestDTO clientRequestDTO){
+        return clientService.update(id, clientRequestDTO);
+    }
 }
