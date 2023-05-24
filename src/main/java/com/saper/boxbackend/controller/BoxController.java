@@ -23,7 +23,6 @@ public class BoxController {
     }
 
     @PostMapping
-    public  Object save(BoxRequestDTO boxRequestDTO){
-        return boxService.save(boxRequestDTO);
+    public  Object save(@RequestBody BoxRequestDTO boxRequestDTO){return boxService.save(boxRequestDTO);
     }
 }
