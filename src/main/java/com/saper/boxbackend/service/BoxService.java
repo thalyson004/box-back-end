@@ -4,6 +4,7 @@ import com.saper.boxbackend.dto.BoxRequestDTO;
 import com.saper.boxbackend.dto.BoxResponseDTO;
 import com.saper.boxbackend.model.Box;
 import com.saper.boxbackend.repository.BoxRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class BoxService {
         return boxRepository.findAll().stream().map((box)-> new BoxResponseDTO(box));
     }
 
+    @Transactional
     public Object save(BoxRequestDTO boxRequestDTO) {
 
         Box box = new Box(boxRequestDTO);
@@ -34,6 +36,27 @@ public class BoxService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Box não encontrado");
         }else{
             return ResponseEntity.status(HttpStatus.OK).body(optionalBox.get());
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<Object> update(Long id, BoxRequestDTO boxRequestDTO) {
+        Optional<Box> optionalBox = boxRepository.findById(id);
+
+        if(optionalBox.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Box não encontrado");
+        }else{
+            Box box = optionalBox.get();
+
+            if(boxRequestDTO.name!=null){
+                box.setName(boxRequestDTO.name);
+            }
+
+            if(boxRequestDTO.capacity!=null){
+                box.setCapacity(boxRequestDTO.capacity);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(new BoxResponseDTO(boxRepository.save(box)));
         }
     }
 }

@@ -43,6 +43,7 @@ public class ClientService {
         }
     }
 
+    @Transactional
     public Object update(Long id, ClientRequestDTO clientRequestDTO) {
         Optional<Client> clientOptional = clientRepository.findById(id);
 

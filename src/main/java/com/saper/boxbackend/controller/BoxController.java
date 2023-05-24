@@ -25,4 +25,10 @@ public class BoxController {
     @PostMapping
     public  Object save(@RequestBody BoxRequestDTO boxRequestDTO){return boxService.save(boxRequestDTO);
     }
+
+    @PutMapping("/{id}")
+    public  Object update(@PathVariable(name = "id") Long id,
+                          @RequestBody BoxRequestDTO boxRequestDTO){
+        return boxService.update(id, boxRequestDTO);
+    }
 }
