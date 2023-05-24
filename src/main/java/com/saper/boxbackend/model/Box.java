@@ -1,11 +1,15 @@
 package com.saper.boxbackend.model;
 
+import com.saper.boxbackend.dto.BoxRequestDTO;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Box {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     String name;
@@ -13,6 +17,12 @@ public class Box {
     Integer capacity;
 
     String created_by;
+
+    public Box(BoxRequestDTO boxRequestDTO) {
+        this.name = boxRequestDTO.name;
+        this.capacity = boxRequestDTO.capacity;
+        this.created_by = "Admin";
+    }
 
     public Long getId() {
         return id;
