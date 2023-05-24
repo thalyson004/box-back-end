@@ -20,6 +20,11 @@ public class ClientController {
         return clientService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public Object getOne(@PathVariable(name = "id") Long id){
+        return clientService.findById(id);
+    }
+
     @PostMapping
     public Object save(@RequestBody ClientRequestDTO clientRequestDTO){
 
