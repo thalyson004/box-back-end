@@ -5,3 +5,7 @@ insert into client(EMAIL, LOGIN, NAME, PASSWORD) values ('email3', 'login3', 'na
 insert into box(NAME, CAPACITY, CREATED_BY) values ('Box do Saulo', 50, 'Saulo');
 insert into box(NAME, CAPACITY, CREATED_BY) values ('Box do Thiago', 40, 'Thiago');
 insert into box(NAME, CAPACITY, CREATED_BY) values ('Box do Adriano', 25, 'Adriano');
+
+insert into student(CLIENT_ID) values (1);
+insert into student(CLIENT_ID) values (2);
+insert into student(CLIENT_ID) values (3);

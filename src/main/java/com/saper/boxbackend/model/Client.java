@@ -28,6 +28,10 @@ public class Client {
     @Column(nullable = false)
     String password;
 
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_id")
+    Student student;
+
     public Client() {
     }
 
@@ -38,7 +42,13 @@ public class Client {
         this.email = clientRequestDTO.email;
     }
 
+    public Student getStudent() {
+        return student;
+    }
 
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
     public Client(Long id, String name, String login, String email, String password) {
         this.id = id;
