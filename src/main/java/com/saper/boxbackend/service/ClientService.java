@@ -18,8 +18,12 @@ public class ClientService {
     @Autowired
     ClientRepository clientRepository;
 
-    public Object getAll(){
-        return clientRepository.findAll().stream().map((client -> new ClientResponseDTO(client)));
+    public Object getAllByName(String name){
+        if(name.equals("")) {
+            return clientRepository.findAll().stream().map((client -> new ClientResponseDTO(client)));
+        }else{
+            return clientRepository.findAllByNameContaining(name).stream().map((client -> new ClientResponseDTO(client)));
+        }
     }
 
     @Transactional
@@ -39,7 +43,7 @@ public class ClientService {
         if(clientOptional.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
         }else{
-            return ResponseEntity.status(HttpStatus.OK).body(clientOptional.get());
+            return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(clientOptional.get()));
         }
     }
 

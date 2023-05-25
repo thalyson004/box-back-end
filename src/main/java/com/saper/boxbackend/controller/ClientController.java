@@ -16,8 +16,8 @@ public class ClientController {
     ClientService clientService;
 
     @GetMapping
-    public Object getAll(){
-        return clientService.getAll();
+    public Object getAllByName(@RequestParam(name = "name", defaultValue = "") String name){
+        return clientService.getAllByName(name);
     }
 
     @GetMapping("/{id}")
