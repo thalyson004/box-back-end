@@ -2,6 +2,7 @@ package com.saper.boxbackend.controller;
 
 import com.saper.boxbackend.dto.BoxRequestDTO;
 import com.saper.boxbackend.service.BoxService;
+import org.apache.logging.log4j.spi.ObjectThreadContextMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +31,10 @@ public class BoxController {
     public  Object update(@PathVariable(name = "id") Long id,
                           @RequestBody BoxRequestDTO boxRequestDTO){
         return boxService.update(id, boxRequestDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public Object delete(@PathVariable(name = "id") Long id){
+        return boxService.delete(id);
     }
 }
