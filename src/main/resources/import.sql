@@ -9,3 +9,7 @@ insert into box(NAME, CAPACITY, CREATED_BY) values ('Box do Adriano', 25, 'Adria
 insert into student(CLIENT_ID) values (1);
 insert into student(CLIENT_ID) values (2);
 insert into student(CLIENT_ID) values (3);
+
+insert into team(SCHEDULE, BOX_ID) values ('35_16', 1);
+insert into team(SCHEDULE, BOX_ID) values ('35_17', 1);
+insert into team(SCHEDULE, BOX_ID) values ('35_18', 1);
