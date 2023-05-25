@@ -2,6 +2,8 @@ package com.saper.boxbackend.dto;
 
 import com.saper.boxbackend.model.Box;
 
+import java.util.List;
+
 public class BoxResponseDTO {
 
     public Long id;
@@ -9,6 +11,8 @@ public class BoxResponseDTO {
 
     public String created_by;
     public Integer capacity;
+
+    public List<Long> teams;
 
     public BoxResponseDTO(String name) {
         this.name = name;
@@ -19,6 +23,7 @@ public class BoxResponseDTO {
         this.name = box.getName();
         this.created_by = box.getCreated_by();
         this.capacity= box.getCapacity();
+        this.teams = box.getTeams().stream().map(team -> team.getId()).toList();
     }
 
     public BoxResponseDTO(Long id, String name, String created_by, Integer capacity) {

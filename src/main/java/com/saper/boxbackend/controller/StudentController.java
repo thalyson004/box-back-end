@@ -21,4 +21,11 @@ public class StudentController {
     public  Object save(@RequestBody ClientRequestDTO clientRequestDTO){
         return studentService.save(clientRequestDTO);
     }
+
+    @PostMapping("/{student_id}/{team_id}")
+    public Object enroll(
+            @PathVariable(name = "student_id") Long student_id,
+            @PathVariable(name = "team_id") Long team_id){
+        return  studentService.enroll(student_id, team_id);
+    }
 }

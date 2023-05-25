@@ -35,7 +35,7 @@ public class BoxService {
         if(optionalBox.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Box não encontrado");
         }else{
-            return ResponseEntity.status(HttpStatus.OK).body(optionalBox.get());
+            return ResponseEntity.status(HttpStatus.OK).body(new BoxResponseDTO(optionalBox.get()));
         }
     }
 

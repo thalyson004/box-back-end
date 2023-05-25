@@ -2,6 +2,8 @@ package com.saper.boxbackend.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class Student {
 
@@ -13,6 +15,17 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "client_id")
     Client client;
+
+    @ManyToMany(mappedBy = "students")
+    Set<Team> teams;
+
+    public Set<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
+    }
 
     public Long getId() {
         return id;
