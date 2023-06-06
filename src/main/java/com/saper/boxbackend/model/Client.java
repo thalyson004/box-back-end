@@ -1,10 +1,16 @@
 package com.saper.boxbackend.model;
 
 import com.saper.boxbackend.dto.ClientRequestDTO;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import jakarta.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
-public class Client {
+public class Client implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
@@ -32,12 +38,20 @@ public class Client {
     @JoinColumn(name = "student_id")
     Student student;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "client_role",
+        joinColumns = @JoinColumn(name = "client_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    Set<Role> roles;
+
     public Client() {
     }
 
     public Client(ClientRequestDTO clientRequestDTO) {
         this.login = clientRequestDTO.login;
-        this.password = clientRequestDTO.password;
+        this.password = new BCryptPasswordEncoder().encode(clientRequestDTO.password);
         this.name = clientRequestDTO.name;
         this.email = clientRequestDTO.email;
     }
@@ -90,8 +104,38 @@ public class Client {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
