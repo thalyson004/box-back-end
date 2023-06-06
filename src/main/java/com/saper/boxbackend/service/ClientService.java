@@ -4,7 +4,7 @@ import com.saper.boxbackend.dto.ClientRequestDTO;
 import com.saper.boxbackend.dto.ClientResponseDTO;
 import com.saper.boxbackend.model.Client;
 import com.saper.boxbackend.repository.ClientRepository;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package com.saper.boxbackend.model;
 
 import com.saper.boxbackend.dto.BoxRequestDTO;
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import java.util.Set;
 

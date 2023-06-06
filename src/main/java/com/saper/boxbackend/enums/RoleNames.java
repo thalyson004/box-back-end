@@ -1,8 +1,8 @@
 package com.saper.boxbackend.enums;
 
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 public enum RoleNames {
     ROLE_ADMIN,

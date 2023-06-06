@@ -6,7 +6,7 @@ import com.saper.boxbackend.model.Box;
 import com.saper.boxbackend.model.Team;
 import com.saper.boxbackend.repository.BoxRepository;
 import com.saper.boxbackend.repository.TeamRepository;
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

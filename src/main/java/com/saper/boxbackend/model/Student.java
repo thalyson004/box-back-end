@@ -1,6 +1,6 @@
 package com.saper.boxbackend.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import java.util.Set;
 
