@@ -7,6 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Client implements UserDetails {
@@ -36,6 +38,12 @@ public class Client implements UserDetails {
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     Student student;
+
+    @ManyToMany
+    @JoinTable(name = "client_role",
+            joinColumns = @JoinColumn(name = "client_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    Set<Role> roles;
 
     public Client() {
     }
@@ -97,7 +105,7 @@ public class Client implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
     public String getPassword() {
