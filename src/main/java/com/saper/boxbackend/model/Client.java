@@ -39,7 +39,7 @@ public class Client implements UserDetails {
     @JoinColumn(name = "student_id")
     Student student;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "client_role",
             joinColumns = @JoinColumn(name = "client_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
