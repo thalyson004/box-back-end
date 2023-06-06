@@ -23,7 +23,7 @@ public class BoxResponseDTO {
         this.name = box.getName();
         this.created_by = box.getCreated_by();
         this.capacity= box.getCapacity();
-        this.teams = box.getTeams().stream().map(team -> team.getId()).toList();
+        this.teams = box.getTeams()!=null ? box.getTeams().stream().map(team -> team.getId()).toList() : List.of();
     }
 
     public BoxResponseDTO(Long id, String name, String created_by, Integer capacity) {
