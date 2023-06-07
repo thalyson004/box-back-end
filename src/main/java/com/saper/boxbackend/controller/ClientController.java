@@ -6,6 +6,8 @@ import com.saper.boxbackend.model.Client;
 import com.saper.boxbackend.repository.ClientRepository;
 import com.saper.boxbackend.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,5 +42,17 @@ public class ClientController {
     @DeleteMapping("/{id}")
     public Object delete(@PathVariable(name = "id") Long id){
         return clientService.delete(id);
+    }
+
+    @GetMapping("/username")
+    public Object getUsername(){
+        Object logged = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String username = "";
+
+        if (logged instanceof Client) {
+            username = ((Client) logged).getUsername();
+        }
+        return username;
     }
 }
