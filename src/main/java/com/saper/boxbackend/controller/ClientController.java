@@ -6,6 +6,7 @@ import com.saper.boxbackend.model.Client;
 import com.saper.boxbackend.repository.ClientRepository;
 import com.saper.boxbackend.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,5 +41,10 @@ public class ClientController {
     @DeleteMapping("/{id}")
     public Object delete(@PathVariable(name = "id") Long id){
         return clientService.delete(id);
+    }
+
+    @GetMapping("/username")
+    public ResponseEntity<Object> username(){
+        return clientService.username();
     }
 }

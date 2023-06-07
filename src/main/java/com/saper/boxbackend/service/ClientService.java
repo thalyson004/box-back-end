@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -77,6 +79,20 @@ public class ClientService {
         }else{
             clientRepository.delete(clientOptional.get());
             return ResponseEntity.status(HttpStatus.OK).build();
+        }
+    }
+
+    public ResponseEntity<Object> username() {
+        Object logged = SecurityContextHolder
+                                    .getContext()
+                                    .getAuthentication()
+                                    .getPrincipal();
+
+        if(logged instanceof UserDetails){
+            String username = ((UserDetails) logged).getUsername();
+            return ResponseEntity.status(HttpStatus.OK).body(username);
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }
