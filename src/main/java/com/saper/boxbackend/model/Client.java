@@ -113,6 +113,14 @@ public class Client implements UserDetails {
         return password;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String getUsername() {
         return login;

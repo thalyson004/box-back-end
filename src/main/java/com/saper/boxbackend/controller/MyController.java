@@ -19,7 +19,11 @@ public class MyController {
 
     @GetMapping("/client")
     public ResponseEntity<Object> getClient(){
-        Client client = myService.getClient();
-        return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(client));
+        return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(myService.getClient()));
+    }
+
+    @GetMapping("/teams")
+    public ResponseEntity<Object> getTeams(){
+        return myService.getTeams();
     }
 }
