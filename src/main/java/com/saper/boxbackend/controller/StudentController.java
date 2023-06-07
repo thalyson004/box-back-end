@@ -2,6 +2,7 @@ package com.saper.boxbackend.controller;
 
 import com.saper.boxbackend.dto.ClientRequestDTO;
 import com.saper.boxbackend.service.StudentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public  Object save(@RequestBody ClientRequestDTO clientRequestDTO){
+    public  Object save(@Valid @RequestBody ClientRequestDTO clientRequestDTO){
         return studentService.save(clientRequestDTO);
     }
 
