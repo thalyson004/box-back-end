@@ -3,18 +3,24 @@ package com.saper.boxbackend.service;
 import com.saper.boxbackend.dto.ClientRequestDTO;
 import com.saper.boxbackend.dto.ClientResponseDTO;
 import com.saper.boxbackend.dto.StudentResponseDTO;
+import com.saper.boxbackend.enums.RoleNames;
 import com.saper.boxbackend.model.Client;
+import com.saper.boxbackend.model.Role;
 import com.saper.boxbackend.model.Student;
 import com.saper.boxbackend.model.Team;
 import com.saper.boxbackend.repository.ClientRepository;
+import com.saper.boxbackend.repository.RoleRepository;
 import com.saper.boxbackend.repository.StudentRepository;
 import com.saper.boxbackend.repository.TeamRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class StudentService {
@@ -28,6 +34,9 @@ public class StudentService {
     @Autowired
     ClientRepository clientRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     public ResponseEntity<Object> findById(Long id) {
         Optional<Student> studentOptional = studentRepository.findById(id);
 
@@ -38,8 +47,11 @@ public class StudentService {
         }
     }
 
+    @Transactional
     public Object save(ClientRequestDTO clientRequestDTO) {
         Client client = new Client(clientRequestDTO);
+
+        setRoleAsStudent(client);
 
         client = clientRepository.save(client);
 
@@ -78,4 +90,13 @@ public class StudentService {
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    public void setRoleAsStudent(Client client){
+        Optional<Role> optionalRole =
+                roleRepository.findByRole(RoleNames.ROLE_STUDENT);
+        Set<Role> setRole = new HashSet<>();
+        setRole.add(optionalRole.get());
+        client.setRoles(setRole);
+    }
+
 }

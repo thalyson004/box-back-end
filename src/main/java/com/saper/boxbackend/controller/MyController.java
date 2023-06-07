@@ -21,4 +21,9 @@ public class MyController {
     public ResponseEntity<Object> getClient(){
         return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(myService.getLogged()));
     }
+
+    @GetMapping("/enrollments")
+    public ResponseEntity<Object> getEnrollments(){
+        return myService.getEnrollments();
+    }
 }

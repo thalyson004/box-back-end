@@ -140,4 +140,8 @@ public class Client implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
