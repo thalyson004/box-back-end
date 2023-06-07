@@ -33,7 +33,6 @@ public class Client implements UserDetails {
 
     @Column(nullable = false)
     String password;
-
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id")
     Student student;

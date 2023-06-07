@@ -16,10 +16,8 @@ public class SecurityConfiguration {
         http.httpBasic();
         http.authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/client").permitAll()
-                .requestMatchers(HttpMethod.GET, "/client/**").hasAnyRole("ADMIN", "STUDENT")
-                .requestMatchers(HttpMethod.POST, "/box").hasAnyRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-                .anyRequest().authenticated();
+                .requestMatchers("/my/**").hasRole("STUDENT")
+                .anyRequest().hasRole("ADMIN");
         http.csrf().disable();
 
         return http.build();

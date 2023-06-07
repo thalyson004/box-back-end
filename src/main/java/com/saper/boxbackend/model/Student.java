@@ -16,7 +16,7 @@ public class Student {
     @JoinColumn(name = "client_id")
     Client client;
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "students", fetch = FetchType.EAGER)
     Set<Team> teams;
 
     public Set<Team> getTeams() {
