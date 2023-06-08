@@ -1,5 +1,6 @@
 package com.saper.boxbackend.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -15,5 +16,6 @@ public class ClientRequestDTO {
     @NotBlank
     public  String login;
 
+    @Email
     public  String email;
 }

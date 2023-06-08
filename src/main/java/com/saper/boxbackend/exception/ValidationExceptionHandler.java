@@ -1,6 +1,7 @@
 package com.saper.boxbackend.exception;
 
 
+import com.saper.boxbackend.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -19,15 +20,12 @@ public class ValidationExceptionHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        List<Map<String, String>> errors = new ArrayList<>();
+        List<ErrorDTO> errors = new ArrayList<>();
         exception
                 .getBindingResult()
                 .getAllErrors()
                 .forEach(error -> {
-                    Map<String, String> entry = new HashMap<>();
-                    entry.put("field", ((FieldError) error).getField());
-                    entry.put("error", error.getDefaultMessage());
-                    errors.add(entry);
+                    errors.add(new ErrorDTO(((FieldError) error).getField(), error.getDefaultMessage()));
                 });
         return errors;
     }

@@ -12,6 +12,7 @@ public class Box {
     @Column(name = "box_id")
     Long id;
 
+    @Column(nullable = false)
     String name;
 
     Integer capacity;
