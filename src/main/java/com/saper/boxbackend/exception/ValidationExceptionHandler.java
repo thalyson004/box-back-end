@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestControllerAdvice
 public class ValidationExceptionHandler {
@@ -37,6 +34,32 @@ public class ValidationExceptionHandler {
                             request.getRequestURI()));
                 });
         return errors;
+    }
+
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException.class)
+    public ErrorDTO handleNoSuchElementException(NoSuchElementException exception, HttpServletRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setTimeStamp(Instant.now());
+        errorDTO.setStatus(HttpStatus.NOT_FOUND.toString());
+        errorDTO.setError("resource not found");
+        errorDTO.setMessage(exception.getMessage());
+        errorDTO.setPath(request.getRequestURI());
+        return errorDTO;
+    }
+
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(Exception.class)
+    public ErrorDTO handleException(
+            Exception exception,
+            HttpServletRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setTimeStamp(Instant.now());
+        errorDTO.setStatus(HttpStatus.NOT_FOUND.toString());
+        errorDTO.setError("resource not found");
+        errorDTO.setMessage(exception.getMessage());
+        errorDTO.setPath(request.getRequestURI());
+        return errorDTO;
     }
 }
 
