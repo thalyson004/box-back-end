@@ -61,14 +61,10 @@ public class BoxService {
     }
 
     public Object delete(Long id) {
-        Optional<Box> optionalBox = boxRepository.findById(id);
+        Box box = boxRepository.findById(id).orElseThrow();
 
-        if(optionalBox.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Box não encontrado");
-        }else{
-            boxRepository.delete(optionalBox.get());
+        boxRepository.delete(box);
 
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

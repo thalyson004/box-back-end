@@ -38,6 +38,21 @@ public class ValidationExceptionHandler {
         return errors;
     }
 
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException.class)
+    public Object handleNoSuchElementException(
+            NoSuchElementException exception,
+            HttpServletRequest request) {
+
+        return new ErrorDTO(
+                Instant.now(),
+                HttpStatus.NOT_FOUND.toString(),
+               "resource not found",
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+    }
+
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
     public Object handleException(
