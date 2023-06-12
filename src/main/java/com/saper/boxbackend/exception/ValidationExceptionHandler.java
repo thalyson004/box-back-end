@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestControllerAdvice
 public class ValidationExceptionHandler {
@@ -40,5 +37,22 @@ public class ValidationExceptionHandler {
 
         return errors;
     }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(Exception.class)
+    public Object handleException(
+            Exception exception,
+            HttpServletRequest request) {
+
+        return new ErrorDTO(
+                Instant.now(),
+                HttpStatus.BAD_REQUEST.toString(),
+                "unknown error",
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+    }
+
+
 }
 

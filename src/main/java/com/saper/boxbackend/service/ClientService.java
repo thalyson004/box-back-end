@@ -2,6 +2,7 @@ package com.saper.boxbackend.service;
 
 import com.saper.boxbackend.dto.ClientRequestDTO;
 import com.saper.boxbackend.dto.ClientResponseDTO;
+import com.saper.boxbackend.dto.ErrorDTO;
 import com.saper.boxbackend.model.Client;
 import com.saper.boxbackend.repository.ClientRepository;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -72,11 +74,7 @@ public class ClientService {
     public ResponseEntity<Object> delete(Long id) {
         Optional<Client> clientOptional = clientRepository.findById(id);
 
-        if(clientOptional.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }else{
-            clientRepository.delete(clientOptional.get());
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
+        clientRepository.delete(clientOptional.get());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
