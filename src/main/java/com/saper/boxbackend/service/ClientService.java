@@ -40,41 +40,24 @@ public class ClientService {
     }
 
     public ResponseEntity<Object> findById(Long id) {
-        Optional<Client> clientOptional = clientRepository.findById(id);
+        Client client = clientRepository.findById(id).orElseThrow();
 
-        if(clientOptional.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }else{
-            return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(clientOptional.get()));
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(client));
     }
 
     @Transactional
     public Object update(Long id, ClientRequestDTO clientRequestDTO) {
-        Optional<Client> clientOptional = clientRepository.findById(id);
+        Client client = clientRepository.findById(id).orElseThrow();
 
-        if(clientOptional.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
-        }else{
-            Client client = clientOptional.get();
-
-            if(clientRequestDTO.password!=null) {
-                client.setPassword(clientRequestDTO.password);
-            }
-
-            if(clientRequestDTO.name!=null) {
-                client.setName(clientRequestDTO.name);
-            }
-
-            return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(clientRepository.save(client)));
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(clientRepository.save(client)));
     }
 
     @Transactional
     public ResponseEntity<Object> delete(Long id) {
-        Optional<Client> clientOptional = clientRepository.findById(id);
+        Client client = clientRepository.findById(id).orElseThrow();
 
-        clientRepository.delete(clientOptional.get());
+        clientRepository.delete(client);
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
