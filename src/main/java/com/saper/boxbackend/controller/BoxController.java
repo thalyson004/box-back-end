@@ -2,6 +2,7 @@ package com.saper.boxbackend.controller;
 
 import com.saper.boxbackend.dto.BoxRequestDTO;
 import com.saper.boxbackend.service.BoxService;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.spi.ObjectThreadContextMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class BoxController {
     }
 
     @PostMapping
-    public  Object save(@RequestBody BoxRequestDTO boxRequestDTO){return boxService.save(boxRequestDTO);
+    public  Object save(@Valid @RequestBody BoxRequestDTO boxRequestDTO){return boxService.save(boxRequestDTO);
     }
 
     @PutMapping("/{id}")
