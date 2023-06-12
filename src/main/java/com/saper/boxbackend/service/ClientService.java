@@ -3,6 +3,7 @@ package com.saper.boxbackend.service;
 import com.saper.boxbackend.dto.ClientRequestDTO;
 import com.saper.boxbackend.dto.ClientResponseDTO;
 import com.saper.boxbackend.dto.ErrorDTO;
+import com.saper.boxbackend.exception.exceptions.ConflictStoreException;
 import com.saper.boxbackend.model.Client;
 import com.saper.boxbackend.repository.ClientRepository;
 import jakarta.transaction.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -32,7 +34,11 @@ public class ClientService {
     public Object save(ClientRequestDTO clientRequestDTO){
         Client client = new Client(clientRequestDTO);
 
-        client = clientRepository.save(client);
+        try {
+            client = clientRepository.save(client);
+        }catch (Exception exception){
+            throw new ConflictStoreException("could not save the client");
+        }
 
         ClientResponseDTO clientResponseDTO = new ClientResponseDTO(client);
 
@@ -40,7 +46,7 @@ public class ClientService {
     }
 
     public ResponseEntity<Object> findById(Long id) {
-        Client client = clientRepository.findById(id).orElseThrow();
+        Client client = clientRepository.findById(id).orElseThrow( () -> new NoSuchElementException("client not found"));
 
         return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(client));
     }
@@ -49,7 +55,9 @@ public class ClientService {
     public Object update(Long id, ClientRequestDTO clientRequestDTO) {
         Client client = clientRepository.findById(id).orElseThrow();
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(clientRepository.save(client)));
+        client = clientRepository.save(client);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new ClientResponseDTO(client));
     }
 
     @Transactional

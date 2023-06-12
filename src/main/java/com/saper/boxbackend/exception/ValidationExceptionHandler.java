@@ -2,6 +2,7 @@ package com.saper.boxbackend.exception;
 
 
 import com.saper.boxbackend.dto.ErrorDTO;
+import com.saper.boxbackend.exception.exceptions.ConflictStoreException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,20 @@ public class ValidationExceptionHandler {
         errorDTO.setStatus(HttpStatus.CONFLICT.toString());
         errorDTO.setError("Database conflict");
         errorDTO.setMessage("Could not execute statement");
+        errorDTO.setPath(request.getRequestURI());
+        return errorDTO;
+    }
+
+    @ResponseStatus(code = HttpStatus.CONFLICT)
+    @ExceptionHandler(ConflictStoreException.class)
+    public ErrorDTO handleConflictStoreException(
+            ConflictStoreException exception,
+            HttpServletRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setTimeStamp(Instant.now());
+        errorDTO.setStatus(HttpStatus.CONFLICT.toString());
+        errorDTO.setError("Database conflict");
+        errorDTO.setMessage(exception.getMessage());
         errorDTO.setPath(request.getRequestURI());
         return errorDTO;
     }
